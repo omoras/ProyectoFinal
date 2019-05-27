@@ -25,7 +25,7 @@ import javax.transaction.UserTransaction;
  */
 public class DivisasJpaController implements Serializable {
 
-    public DivisasJpaController(    ) {
+    public DivisasJpaController() {
         this.emf = Persistence.createEntityManagerFactory("com.mycompany_ProyectoFinal-ejb_ejb_1.0-SNAPSHOTPU").createEntityManager();
     }
     private UserTransaction utx = null;
@@ -42,7 +42,7 @@ public class DivisasJpaController implements Serializable {
             emf.getTransaction().commit();
         } catch (Exception ex) {
             try {
-               
+
             } catch (Exception re) {
                 throw ex;
             }
@@ -60,7 +60,7 @@ public class DivisasJpaController implements Serializable {
             emf.merge(divisas);
             emf.getTransaction().commit();
         } catch (Exception ex) {
-            
+
             throw ex;
         } finally {
             if (emf != null) {
@@ -71,13 +71,13 @@ public class DivisasJpaController implements Serializable {
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
-            
+
             emf.getTransaction().begin();
             emf.remove(id);
             emf.getTransaction().commit();
-            
+
         } catch (Exception ex) {
-            
+
             throw ex;
         } finally {
             if (emf != null) {
@@ -119,6 +119,16 @@ public class DivisasJpaController implements Serializable {
         }
     }
 
+    public Divisas findNameDivisas(String name) {
+        EntityManager em = getEntityManager();
+        try {
+            String query = "SELECT d FROM Divisas d WHERE d.nombre=:"+name;
+            return (Divisas) em.createQuery(query);
+        } finally {
+            em.close();
+        }
+    }
+
     public int getDivisasCount() {
         EntityManager em = getEntityManager();
         try {
@@ -131,5 +141,5 @@ public class DivisasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

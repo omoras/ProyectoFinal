@@ -15,5 +15,5 @@ import javax.ejb.Local;
 @Local
 public interface ServicioEJBDivisaLocal {
     public void guardarDivisa(Divisas divisa);
-    public Divisas buscarDivisa(String nombreDivisa);
+    public Divisas buscarDivisa();
 }

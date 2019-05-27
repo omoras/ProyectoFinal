@@ -7,6 +7,9 @@ package com.mycompany;
 
 import com.mycompany.ControllerEntity.DivisasJpaController;
 import com.mycompany.Entity.Divisas;
+import com.mycompany.Logica.CambioDivisa;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 
 /**
@@ -18,13 +21,26 @@ public class ServicioEJBDivisa implements ServicioEJBDivisaLocal {
 
     @Override
     public void guardarDivisa(Divisas divisa) {
-        DivisasJpaController jpa=new DivisasJpaController();
-        
+        DivisasJpaController jpa = new DivisasJpaController();
+        try {
+            jpa.create(divisa);
+        } catch (Exception ex) {
+            Logger.getLogger(ServicioEJBDivisa.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public Divisas buscarDivisa(String nombreDivisa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Divisas buscarDivisa() {
+        System.out.println("Llego a buscarDivisa Interfaz");
+        //Busqueda
+        // Divisas div=new Divisas(2, "PesoColombiano", (float) 1.33, (float) 1.5444);
+        DivisasJpaController jpa = new DivisasJpaController();
+        Divisas div;
+        div = jpa.findDivisas(2);
+        System.out.println(div.getNombre());
+    //Busqueda
+        div = CambioDivisa.cambioDivisa(div);
+        return div;
     }
 
     // Add business logic below. (Right-click in editor and choose
