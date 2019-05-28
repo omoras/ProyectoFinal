@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -119,13 +120,21 @@ public class DivisasJpaController implements Serializable {
         }
     }
 
-    public Divisas findNameDivisas(String name) {
+    public Divisas busacaDivisasNombre(String name) {
         EntityManager em = getEntityManager();
         try {
-            String query = "SELECT d FROM Divisas d WHERE d.nombre=:"+name;
-            return (Divisas) em.createQuery(query);
-        } finally {
-            em.close();
+            Divisas d;
+            TypedQuery<Divisas>consultaDivisa=emf.createNamedQuery("Divisas.findByNombre",Divisas.class);
+            consultaDivisa.setParameter("nombre",name);
+            d=consultaDivisa.getSingleResult(); 
+            System.out.println("LLego a buscar la divisa");
+            
+            return d;
+            
+            
+        } catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+            return null;
         }
     }
 

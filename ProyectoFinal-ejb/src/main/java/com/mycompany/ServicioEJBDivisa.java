@@ -30,13 +30,11 @@ public class ServicioEJBDivisa implements ServicioEJBDivisaLocal {
     }
 
     @Override
-    public Divisas buscarDivisa() {
+    public Divisas buscarDivisa(String nombreDivisa) {
         System.out.println("Llego a buscarDivisa Interfaz");
-        //Busqueda
-        // Divisas div=new Divisas(2, "PesoColombiano", (float) 1.33, (float) 1.5444);
         DivisasJpaController jpa = new DivisasJpaController();
         Divisas div;
-        div = jpa.findDivisas(2);
+        div = jpa.busacaDivisasNombre(nombreDivisa);
         System.out.println(div.getNombre());
     //Busqueda
         div = CambioDivisa.cambioDivisa(div);

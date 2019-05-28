@@ -5,7 +5,7 @@
  */
 package com.mycompany;
 
-import com.mycompany.Entity.Divisas;
+import com.mycompany.Entity.Usuarios;
 import javax.ejb.Local;
 
 /**
@@ -13,7 +13,6 @@ import javax.ejb.Local;
  * @author orlan
  */
 @Local
-public interface ServicioEJBDivisaLocal {
-    public void guardarDivisa(Divisas divisa);
-    public Divisas buscarDivisa(String nombreDivisa);
+public interface ServicioEJBUsuarioLocal {
+    public void guardarUsuario(Usuarios usuarios);
 }
