@@ -27,7 +27,7 @@ public class ServicioDivisa {
     @Path("/guardar")
     @Produces(MediaType.APPLICATION_JSON)
     public Response guardarDivisa() {
-        Divisas divisa=new Divisas(1, "Euro", (float) 0.5344, (float) 0.5605);
+        Divisas divisa=new Divisas(1, "LibraEsterlina", (float) 0.5344, (float) 0.5605);
         servicioEjb.guardarDivisa(divisa);
         return Response.status(Response.Status.OK).build();
     }
