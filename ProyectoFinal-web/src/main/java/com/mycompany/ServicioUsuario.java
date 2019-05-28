@@ -24,13 +24,15 @@ import javax.ws.rs.core.Response;
 public class ServicioUsuario {
     @EJB
     ServicioEJBUsuarioLocal servicioEjb;
-    
+    @EJB
+    ServicioEJBTokensLocal servicioToken;
     @POST
     @Path("/guardar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarPostUsuario(Usuarios usuario) {
-        servicioEjb.guardarUsuario(usuario);
+        Usuarios user=servicioEjb.guardarUsuario(usuario);
+        servicioToken.guardatoken(user);
         return Response.status(Response.Status.OK).build();
     }
 }

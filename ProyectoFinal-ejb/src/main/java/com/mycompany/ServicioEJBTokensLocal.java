@@ -13,6 +13,6 @@ import javax.ejb.Local;
  * @author orlan
  */
 @Local
-public interface ServicioEJBUsuarioLocal {
-    public Usuarios guardarUsuario(Usuarios usuarios);
+public interface ServicioEJBTokensLocal {
+    public String guardatoken(Usuarios user);
 }

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -24,90 +25,63 @@ import javax.transaction.UserTransaction;
  */
 public class TokensJpaController implements Serializable {
 
-    public TokensJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public TokensJpaController() {
+        this.emf =Persistence.createEntityManagerFactory("com.mycompany_ProyectoFinal-ejb_ejb_1.0-SNAPSHOTPU").createEntityManager();
     }
     private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
+    private EntityManager emf = null;
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return emf;
     }
 
-    public void create(Tokens tokens) throws RollbackFailureException, Exception {
-        EntityManager em = null;
+    public void create(Tokens token) throws RollbackFailureException, Exception {
         try {
-            utx.begin();
-            em = getEntityManager();
-            em.persist(tokens);
-            utx.commit();
+            emf.getTransaction().begin();
+            emf.persist(token);
+            emf.getTransaction().commit();
         } catch (Exception ex) {
             try {
-                utx.rollback();
+
             } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
+                throw ex;
             }
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
+            if (emf != null) {
+                emf.close();
             }
         }
     }
 
-    public void edit(Tokens tokens) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
+    public void edit(Tokens token) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
-            utx.begin();
-            em = getEntityManager();
-            tokens = em.merge(tokens);
-            utx.commit();
+            emf.getTransaction().begin();
+            emf.merge(token);
+            emf.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Integer id = tokens.getIdtokens();
-                if (findTokens(id) == null) {
-                    throw new NonexistentEntityException("The tokens with id " + id + " no longer exists.");
-                }
-            }
+
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
+            if (emf != null) {
+                emf.close();
             }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
-            utx.begin();
-            em = getEntityManager();
-            Tokens tokens;
-            try {
-                tokens = em.getReference(Tokens.class, id);
-                tokens.getIdtokens();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The tokens with id " + id + " no longer exists.", enfe);
-            }
-            em.remove(tokens);
-            utx.commit();
+
+            emf.getTransaction().begin();
+            emf.remove(id);
+            emf.getTransaction().commit();
+
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
+
             throw ex;
         } finally {
-            if (em != null) {
-                em.close();
+            if (emf != null) {
+                emf.close();
             }
         }
     }

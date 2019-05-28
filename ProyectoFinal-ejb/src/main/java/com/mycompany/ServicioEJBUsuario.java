@@ -19,12 +19,15 @@ import javax.ejb.Stateless;
 public class ServicioEJBUsuario implements ServicioEJBUsuarioLocal {
 
     @Override
-    public void guardarUsuario(Usuarios usuarios) {
+    public Usuarios guardarUsuario(Usuarios usuarios) {
         UsuariosJpaController jpa =new UsuariosJpaController();
         try{
             jpa.create(usuarios);
+            //falta buscar para saber el id asignado
+            return usuarios;
         } catch (Exception ex) {
             Logger.getLogger(ServicioEJBUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
