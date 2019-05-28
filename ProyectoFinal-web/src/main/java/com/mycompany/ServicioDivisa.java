@@ -38,7 +38,7 @@ public class ServicioDivisa {
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultaDivisa() {
         System.out.println("LLego al servicio Consulta Divisa");
-        Divisas div=servicioEjb.buscarDivisa();
+        Divisas div=servicioEjb.buscarDivisa("Dolar");
         System.out.println("Salio bien: "+div.getNombre());
         return Response.ok(div).build();
     }
