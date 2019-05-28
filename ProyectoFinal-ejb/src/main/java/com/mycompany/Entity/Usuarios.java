@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findByIdUsuarios", query = "SELECT u FROM Usuarios u WHERE u.idUsuarios = :idUsuarios"),
     @NamedQuery(name = "Usuarios.findByDocumento", query = "SELECT u FROM Usuarios u WHERE u.documento = :documento"),
     @NamedQuery(name = "Usuarios.findByDineroReal", query = "SELECT u FROM Usuarios u WHERE u.dineroReal = :dineroReal"),
-    @NamedQuery(name = "Usuarios.findByDineroVirtual", query = "SELECT u FROM Usuarios u WHERE u.dineroVirtual = :dineroVirtual")})
+    @NamedQuery(name = "Usuarios.findByDineroVirtual", query = "SELECT u FROM Usuarios u WHERE u.dineroVirtual = :dineroVirtual"),
+    @NamedQuery(name = "Usuarios.findByUserPass", query = "SELECT u FROM Usuarios u WHERE u.user=:user AND u.pass=:pass")})
 public class Usuarios implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

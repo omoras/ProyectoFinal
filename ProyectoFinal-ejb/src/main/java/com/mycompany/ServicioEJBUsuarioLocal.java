@@ -6,6 +6,7 @@
 package com.mycompany;
 
 import com.mycompany.Entity.Usuarios;
+import com.mycompany.Pojo.User;
 import javax.ejb.Local;
 
 /**
@@ -15,4 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface ServicioEJBUsuarioLocal {
     public void guardarUsuario(Usuarios usuarios);
+    public String logginUser(User user);
 }

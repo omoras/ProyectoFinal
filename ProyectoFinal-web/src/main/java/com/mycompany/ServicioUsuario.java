@@ -6,6 +6,7 @@
 package com.mycompany;
 
 import com.mycompany.Entity.Usuarios;
+import com.mycompany.Pojo.User;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -40,8 +41,9 @@ public class ServicioUsuario {
     @Path("/loggin")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logginUsuario(Usuarios usuario) {
-        
-        return Response.status(Response.Status.OK).build();
+    public Response logginUsuario(User usuario) {
+        System.out.println("Llego al servicio Loggin");
+        String resultado=servicioEjb.logginUser(usuario);
+        return Response.status(Response.Status.OK).entity(resultado).build();
     }
 }

@@ -7,14 +7,19 @@ package com.mycompany.ControllerEntity;
 
 import com.mycompany.ControllerEntity.exceptions.NonexistentEntityException;
 import com.mycompany.ControllerEntity.exceptions.RollbackFailureException;
+import com.mycompany.Entity.Divisas;
 import com.mycompany.Entity.Usuarios;
+import com.mycompany.Pojo.User;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -119,6 +124,25 @@ public class UsuariosJpaController implements Serializable {
         }
     }
 
+    public Usuarios validarUsuario(User usuario) {
+        System.out.println("Prueba de llegada de datos"+usuario.getUser());
+        try {
+            Usuarios u;
+            
+            TypedQuery<Usuarios>consultaDivisa=emf.createNamedQuery("Usuarios.findByUserPass",Usuarios.class);
+            consultaDivisa.setParameter("user",usuario.getUser());
+            consultaDivisa.setParameter("pass",usuario.getPass());
+            
+            u=consultaDivisa.getSingleResult(); 
+            return u;
+            
+        } catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+            Logger.getLogger(DivisasJpaController.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+    
     public int getUsuariosCount() {
         EntityManager em = getEntityManager();
         try {

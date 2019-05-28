@@ -7,6 +7,7 @@ package com.mycompany;
 
 import com.mycompany.ControllerEntity.UsuariosJpaController;
 import com.mycompany.Entity.Usuarios;
+import com.mycompany.Pojo.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -29,6 +30,21 @@ public class ServicioEJBUsuario implements ServicioEJBUsuarioLocal {
         } catch (Exception ex) {
             Logger.getLogger(ServicioEJBUsuario.class.getName()).log(Level.SEVERE, null, ex);
            
+        }
+    }
+
+    @Override
+    public String logginUser(User user) {
+        System.out.println("Llego a logginUser");
+        UsuariosJpaController jpa = new UsuariosJpaController();
+        Usuarios usuario=jpa.validarUsuario(user);
+        if(usuario!=null){
+            ServicioEJBTokens servicio=new ServicioEJBTokens();
+            String token=servicio.guardatoken(usuario);
+            return token;
+            
+        }else{
+            return "Usuario y/o Clave Incorrectos";
         }
     }
 
