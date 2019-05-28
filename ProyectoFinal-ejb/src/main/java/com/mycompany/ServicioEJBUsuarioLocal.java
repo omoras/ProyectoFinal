@@ -14,5 +14,5 @@ import javax.ejb.Local;
  */
 @Local
 public interface ServicioEJBUsuarioLocal {
-    public Usuarios guardarUsuario(Usuarios usuarios);
+    public void guardarUsuario(Usuarios usuarios);
 }

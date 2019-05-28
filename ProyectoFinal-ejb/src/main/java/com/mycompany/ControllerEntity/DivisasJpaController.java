@@ -10,6 +10,8 @@ import com.mycompany.ControllerEntity.exceptions.RollbackFailureException;
 import com.mycompany.Entity.Divisas;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -121,19 +123,19 @@ public class DivisasJpaController implements Serializable {
     }
 
     public Divisas busacaDivisasNombre(String name) {
-        EntityManager em = getEntityManager();
+        System.out.println("Prueba de llegada de datos"+name);
         try {
             Divisas d;
+            
             TypedQuery<Divisas>consultaDivisa=emf.createNamedQuery("Divisas.findByNombre",Divisas.class);
             consultaDivisa.setParameter("nombre",name);
-            d=consultaDivisa.getSingleResult(); 
+            d=consultaDivisa.setMaxResults(1).getSingleResult(); 
             System.out.println("LLego a buscar la divisa");
-            
             return d;
-            
             
         } catch(Exception e){
             System.out.println("Error: "+e.getMessage());
+            Logger.getLogger(DivisasJpaController.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
     }

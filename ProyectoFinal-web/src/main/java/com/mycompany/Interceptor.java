@@ -26,7 +26,7 @@ public class Interceptor implements ContainerRequestFilter{
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String url = requestContext.getUriInfo().getAbsolutePath().toString();
-        if(url.contains("api/usuario/guardar"))
+        if(url.contains("api/usuario/guardar")||url.contains("api/ejemplo/consulta"))
             return;
         String token =  requestContext.getHeaderString("token-auto");
         if(token == null) {

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Divisas.findByIdDivisa", query = "SELECT d FROM Divisas d WHERE d.idDivisa = :idDivisa"),
     @NamedQuery(name = "Divisas.findByValorOld", query = "SELECT d FROM Divisas d WHERE d.valorOld = :valorOld"),
     @NamedQuery(name = "Divisas.findByValorNew", query = "SELECT d FROM Divisas d WHERE d.valorNew = :valorNew"),
-    @NamedQuery(name = "Divisas.findByNombre", query = "SELECT TOP 1 FROM Divisas WHERE nombre= :nombre")})
+    @NamedQuery(name = "Divisas.findByNombre", query = "SELECT d FROM Divisas d WHERE d.nombre= :nombre ORDER BY d.idDivisa DESC")})
 public class Divisas implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -26,13 +26,22 @@ public class ServicioUsuario {
     ServicioEJBUsuarioLocal servicioEjb;
     @EJB
     ServicioEJBTokensLocal servicioToken;
+    
     @POST
     @Path("/guardar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarPostUsuario(Usuarios usuario) {
-        Usuarios user=servicioEjb.guardarUsuario(usuario);
-        servicioToken.guardatoken(user);
+        servicioEjb.guardarUsuario(usuario);
+        return Response.status(Response.Status.OK).build();
+    }
+    
+    @POST
+    @Path("/loggin")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logginUsuario(Usuarios usuario) {
+        
         return Response.status(Response.Status.OK).build();
     }
 }
